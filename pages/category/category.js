@@ -10,7 +10,6 @@ Page({
     point_local_category: [],
     Reachnavcategory: [],
     id: 0,
-    title: '商品分类',
     showSkeleton: true,//显示布局骨架
     fixed: false,
     currentCategory: {},
@@ -38,16 +37,10 @@ Page({
     if (options.id) {
       that.setData({
         id: parseInt(options.id),
-        title: options.title,
         frompage: parseInt(options.page)
       });
     }
-    wx.setNavigationBarTitle({
-      title: that.data.title,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

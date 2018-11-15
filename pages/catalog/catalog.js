@@ -14,35 +14,56 @@ Page({
     goodsCount: 0,
     scrollHeight: 0,
     showSkeleton: false,
+    activelist:[]
   },
   onLoad: function (options) {
-    // this.getCatalog();
+    let that = this
+    // console.log(options)
     wx.showLoading({
-      title: '获取中...',
+      title: '连接服务器...',
       mask: true,
     })
-    this.getAllCatelog(0)
+    that.getIndexData();
+  },
+  getIndexData: function () {
+    let that = this;
+    util.request(api.IndexUrl).then(function (res) {
+      console.log(res)
+      wx.hideLoading()
+      if (res.errno === 0) {
+        that.setData({
+          activelist: res.data.newGoodsList
+        });
+        // util.request(api.GoodsCount).then(function(res) {
+        //   that.setData({
+        //     goodsCount: res.data.goodsCount
+        //   });
+        // });
+        wx.stopPullDownRefresh()
+        that.setTime()
+      }
+    });
   },
   getAllCatelog(typec){
     let that = this
-    util.request(api.getAllCatelog,'POST').then(function (res) {
-      console.log(res)
-      that.setData({
-        allcatelog: res.data.main_catelog,
-        bindid: res.data.main_catelog[that.data.selectindex].id,
-        activelist: res.data.main_catelog[that.data.selectindex]
-      })
-      wx.hideLoading()
-      if (typec == 1){
-        wx.stopPullDownRefresh()
-        wx.showToast({
-          title: '更新成功 ！',
-          icon: 'none',
-          duration: 500,
-          mask: true,
-        })
-      } 
-    })
+    // util.request(api.getAllCatelog,'POST').then(function (res) {
+    //   console.log(res)
+    //   that.setData({
+    //     allcatelog: res.data.main_catelog,
+    //     bindid: res.data.main_catelog[that.data.selectindex].id,
+    //     activelist: res.data.main_catelog[that.data.selectindex]
+    //   })
+    //   wx.hideLoading()
+    //   if (typec == 1){
+    //     wx.stopPullDownRefresh()
+    //     wx.showToast({
+    //       title: '更新成功 ！',
+    //       icon: 'none',
+    //       duration: 500,
+    //       mask: true,
+    //     })
+    //   } 
+    // })
   },
    //下拉刷新
   onPullDownRefresh: function () {
@@ -67,16 +88,6 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
-  },
-  JumpUrl(e) {
-    let url = e.currentTarget.dataset.url
-      let title = '商品分类'
-      wx.navigateTo({
-        url: url + '&title=' + title,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
   },
   switchCate: function (event) {
     var that = this;

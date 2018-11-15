@@ -4,7 +4,7 @@
       <import src="../../../lib/wxParse/wxParse.wxml" />
       <template is="wxParse" data="{{wxParseData:rulestext.nodes}}" />
     </scroll-view>
-  <button class='becomedistribution' bindtap='becomedistribution' disabled='{{!auth || is_apply == "1"}}'>申请成为志愿者
+  <button class='becomedistribution' bindtap='becomedistribution' disabled='{{!auth || is_apply == "1"}}'>申请成为分销员
     <span wx:if="{{!auth}}" style="font-size:22rpx;">（未授权）</span>
     <span wx:if="{{is_apply == '1'}}" style="font-size:22rpx;">（申请已提交，请耐心等待审核）</span>
     <span wx:if="{{is_apply == '2'}}" style="font-size:22rpx;">（申请已被拒绝，可点击重新申请）</span>
@@ -12,7 +12,7 @@
 </view>
 <view class='mask_model' bindtap='hide_model' wx:if="{{show_mask}}"></view>
 <view class='show_model' wx:if="{{show_mask}}">
-<view class='apply_dis_title'>申请成为志愿者</view>
+<view class='apply_dis_title'>申请成为分销员</view>
   <view class='apply_dis_phone_area'>
     <view class='apply_dis_phone_area_left'>国家区号</view>
     <picker bindchange="bindPickerChange" value="{{AreacodeArray_index}}" range="{{AreacodeArray}}" >
@@ -51,17 +51,16 @@
     <view class='top_area'>
       <image class='top_area_avatar' src='{{userInfo.avatar}}'></image>
       <view class='top_area_nickname'>{{userInfo.nickname}}</view>
-      <image class='top_area_simple' src='../../../image/simple.png' bindtap='see_simple'></image>
       <view class='top_area_addtime'>加入时间: {{add_local_time}}</view>
     </view>
 
     <view class='middle_area'>
       <view class='middle_area_item borderright'>
-        <view>志愿金额</view>
+        <view>分销金额</view>
         <view>￥{{distributionInfo[0].children_have_deal_money}}</view>
       </view>
       <view class='middle_area_item borderright'>
-        <view>志愿订单</view>
+        <view>分销订单</view>
         <view>{{distributionInfo[0].have_deal_order_num}}</view>
       </view>
       <view class='middle_area_item'>
@@ -70,8 +69,8 @@
       </view>
     </view>
     <view class='middle_catch_area'>
-      <view class='middle_catch_area_all_text'>累计基金: ￥{{distributionInfo[0].children_have_deal_money}}</view>
-      <view class='middle_catch_area_catch_text'>可提现基金 （元）</view>
+      <view class='middle_catch_area_all_text'>累计佣金: ￥{{distributionInfo[0].children_have_deal_money}}</view>
+      <view class='middle_catch_area_catch_text'>可提现佣金 （元）</view>
       <view class='middle_catch_area_catch_rate'>{{distributionInfo[0].localrate}}%</view>
       <view class='middle_catch_area_catch'>{{distributionInfo[0].can_withdraw_cash}}</view>
       <button bindtap='tocatch' class='middle_catch_area_catch_btn' disabled='{{!cancatch}}'>
@@ -84,7 +83,7 @@
         <view class='middle_bottom_title_name borderright'>用户</view>
         <view class='middle_bottom_title_name borderright'>时间</view>
         <view class='middle_bottom_title_name borderright'>订单价格</view>
-        <view class='middle_bottom_title_name'>基金</view>
+        <view class='middle_bottom_title_name'>佣金</view>
       </view>
       <view class='middle_bottom_noitem' wx:if='{{disgoods.length == 0}}'>您还没有团队购买过商品喔 ~</view>
       <scroll-view scroll-y class='scroll_area' wx:if='{{disgoods.length !== 0}}'>
@@ -117,10 +116,3 @@
     </view>
   <!-- </view> -->
 </view>
-<view class='recharge_box_mask' wx:if="{{show_simple_box}}" bindtap='close_mask'></view>
-<scroll-view scroll-y class='recharge_box' wx:if="{{show_simple_box}}">
-  <!-- <scroll-view scroll-y class="recharge_box_detail"> -->
-      <import src="../../../lib/wxParse/wxParse.wxml" />
-      <template is="wxParse" data="{{wxParseData:rulestext.nodes}}" />
-    <!-- </scroll-view> -->
-</scroll-view>

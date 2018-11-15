@@ -34,7 +34,6 @@ Page({
     sendcodetext: " 获取验证码 ",
     changeisabled: false,
     selectedcountry: {},
-    show_simple_box: false,
   },
 
   /**
@@ -89,7 +88,9 @@ Page({
   },
   getcountrycode(){
     let that = this
-    util.request(api.GetCountryCode).then(res => {
+    util.request(api.GetCountryCode, {
+
+    }, 'POST').then(res => {
       console.log(res)
       if (res.errno == 0) {
         for (let i = 0; i < res.data.length;i++){
@@ -131,19 +132,6 @@ Page({
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
-    })
-  },
-  see_simple() {
-    console.log('123456798')
-    let that = this
-    that.setData({
-      show_simple_box: true
-    })
-  },
-  close_mask() {
-    let that = this
-    that.setData({
-      show_simple_box: false
     })
   },
   seerule() {
@@ -232,321 +220,249 @@ Page({
   },
   becomedistribution() {
     let that = this
-    util.request(api.BingPhoneFind, {
-      userId: that.data.userInfo.id
-    }, 'POST').then(function (res) {
-      console.log(res)
-      let resule = res.data
-      if (resule.Result.mobile == "") {
-        wx.navigateTo({
-          url: '/pages/ucenter/bingphone/bingphone',
-          success: function (res) { },
-          fail: function (res) { },
-          complete: function (res) { },
-        })
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: '当您点击确认即视为同意成为志愿者的条件，并向我们发出成为志愿者的申请，我们将在一个工作日之内处理您的请求 ！',
-          success: function(res) {
-            if(res.confirm){
-              wx.showLoading({
-                title: '提交申请...',
-                mask: true,
-              })
-              setTimeout(() => {
-                util.request(api.ApplyDistribution, {
-                  phone: resule.Result.mobile,
-                  selectedcountry: resule.selectedcountry,
-                  userid: that.data.userInfo.id
-                }, 'POST').then(ress => {
-                  console.log(ress)
-                  that.finddistribinfo()
-                  that.hide_model()
-                })
-                util.request(api.BingPhoneFind,{
-                  userId: that.data.userInfo.id
-                },'POST').then(function (resd) {
-                  console.log(resd)
-                  that.setData({
-                    userInfo: resd.data.Result
-                  })
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '志愿者申请已提交 ！',
-                    icon: 'none',
-                    duration: 2000
-                  })
-                });
-              }, 1000)
-            }
-          },
-          fail: function(res) {},
-          complete: function(res) {},
-        })
-        
-        // console.log(this.data.checkgoodsprice)
-        // wx.showModal({
-        //   title: '提示',
-        //   content: '规格选择后无法更改（谨慎操作！）',
-        //   success: function (res) {
-        //     if (res.confirm) {
-        //       wx.navigateTo({
-        //         url: '/pages/collagecheckout/collagecheckout?collageid=' + that.data.collage[0].id + "&goodsid=" + that.data.goods.id + "&skuid=" + that.data.checkgoodsprice.id + "&skuvalue=" + that.data.checkedSpecText,
-        //         success: function (res) { },
-        //         fail: function (res) { },
-        //         complete: function (res) { },
-        //       })
-        //     }
-        //   },
-        //   fail: function (res) { },
-        //   complete: function (res) { },
-        // })
-      }
-    });
-    // that.getcountrycode()
-    // that.setData({
-    //   show_mask: true
-    // })
+    that.getcountrycode()
+    that.setData({
+      show_mask: true
+    })
     // util.request(api.SetDistriUser, {}, 'POST').then(res => {
     //   console.log(res)
     //   that.finddistribinfo()
     // })
   },
-  // getcode() {
-  //   var that = this
-  //   if (this.data.inputMobile == "") {
-  //     wx.showToast({
-  //       title: '请先输入手机号 ！',
-  //       icon: 'none',
-  //       duration: 1000,
-  //       mask: true,
-  //     })
-  //     // return false;
-  //   } else {
-  //     util.request(api.BingPhoneText, {
-  //       Phone: that.data.inputMobile,
-  //       selectedcountry: that.data.selectedcountry
-  //     }, 'POST').then(function (res) {
-  //       console.log(res)
-  //       if (res.errno === 1001) {
-  //         wx.showToast({
-  //           title: '手机号格式错误 ！',
-  //           icon: 'none',
-  //           duration: 1000,
-  //           mask: true,
-  //         })
-  //       }else if (res.data.type === 1) {
-  //         //发送国际短信
-  //         console.log('发送国际短信')
-  //         util.request(api.SedAbroadSode, {
-  //           phone: that.data.inputMobile,
-  //           selectedcountry: that.data.selectedcountry
-  //         }, 'POST').then(function (res) {
-  //           console.log(res)
-  //           if (res.errno === 0) {
-  //             wx.showToast({
-  //               title: res.data.message,
-  //               icon: 'none',
-  //               duration: 2000
-  //             })
-  //             if (res.data.message == '短信发送成功 ！') {
-  //               setTimeout(() => {
-  //                 wx.showToast({
-  //                   title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
-  //                   icon: 'none',
-  //                   duration: 2000
-  //                 })
-  //               }, 2000)
-  //             } else {
-  //               setTimeout(() => {
-  //                 wx.showToast({
-  //                   title: '异常状态 ！ 短信发送失败 ！',
-  //                   icon: 'none',
-  //                   duration: 2000,
-  //                 })
-  //               }, 2000)
-  //             }
+  getcode() {
+    var that = this
+    if (this.data.inputMobile == "") {
+      wx.showToast({
+        title: '请先输入手机号 ！',
+        icon: 'none',
+        duration: 1000,
+        mask: true,
+      })
+      // return false;
+    } else {
+      util.request(api.BingPhoneText, {
+        Phone: that.data.inputMobile,
+        selectedcountry: that.data.selectedcountry
+      }, 'POST').then(function (res) {
+        console.log(res)
+        if (res.errno === 1001) {
+          wx.showToast({
+            title: '手机号格式错误 ！',
+            icon: 'none',
+            duration: 1000,
+            mask: true,
+          })
+        }else if (res.data.type === 1) {
+          //发送国际短信
+          console.log('发送国际短信')
+          util.request(api.SedAbroadSode, {
+            phone: that.data.inputMobile,
+            selectedcountry: that.data.selectedcountry
+          }, 'POST').then(function (res) {
+            console.log(res)
+            if (res.errno === 0) {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                duration: 2000
+              })
+              if (res.data.message == '短信发送成功 ！') {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }, 2000)
+              } else {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '异常状态 ！ 短信发送失败 ！',
+                    icon: 'none',
+                    duration: 2000,
+                  })
+                }, 2000)
+              }
 
-  //             console.log(res.data.num)
-  //             that.setData({
-  //               truesode: res.data.num
-  //             })
-  //           } else {
-  //             wx.showToast({
-  //               title: '短信发送失败 ！',
-  //               icon: 'none',
-  //               duration: 2000,
-  //               mask: true,
-  //             })
-  //           }
-  //         })
-  //         //按钮倒计时
-  //         var second = that.data.second;
-  //         that.setData({
-  //           sendcodetext: second + '秒',
-  //           codedisabled: true,
-  //           codeloading: true,
-  //           checkdisabled: false,
-  //         })
-  //         const timer = setInterval(() => {
-  //           second--;
-  //           if (second) {
-  //             that.setData({
-  //               sendcodetext: second + '秒',
-  //               codedisabled: true,
-  //               codeloading: true,
-  //             })
-  //           } else {
-  //             clearInterval(timer);
-  //             that.setData({
-  //               sendcodetext: ' 获取验证码 ',
-  //               codedisabled: false,
-  //               codeloading: false,
-  //             })
-  //           }
-  //         }, 1000);
+              console.log(res.data.num)
+              that.setData({
+                truesode: res.data.num
+              })
+            } else {
+              wx.showToast({
+                title: '短信发送失败 ！',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+              })
+            }
+          })
+          //按钮倒计时
+          var second = that.data.second;
+          that.setData({
+            sendcodetext: second + '秒',
+            codedisabled: true,
+            codeloading: true,
+            checkdisabled: false,
+          })
+          const timer = setInterval(() => {
+            second--;
+            if (second) {
+              that.setData({
+                sendcodetext: second + '秒',
+                codedisabled: true,
+                codeloading: true,
+              })
+            } else {
+              clearInterval(timer);
+              that.setData({
+                sendcodetext: ' 获取验证码 ',
+                codedisabled: false,
+                codeloading: false,
+              })
+            }
+          }, 1000);
           
-  //       } else if (res.data.type === 0){
-  //         //发送国内短信
-  //         console.log('发送国内短信')
-  //         //验证手机号
-  //         //发送验证码
-  //         util.request(api.SedDomesticSode, {
-  //           phone: that.data.inputMobile
-  //         }, 'POST').then(function (res) {
-  //           console.log(res)
-  //           if (res.errno === 0) {
-  //             wx.showToast({
-  //               title: res.data.message,
-  //               icon: 'none',
-  //               duration: 2000
-  //             })
-  //             if (res.data.message == '短信发送成功 ！') {
-  //               setTimeout(() => {
-  //                 wx.showToast({
-  //                   title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
-  //                   icon: 'none',
-  //                   duration: 2000
-  //                 })
-  //               }, 2000)
-  //             } else {
-  //               setTimeout(() => {
-  //                 wx.showToast({
-  //                   title: '异常状态 ！ 短信发送失败 ！',
-  //                   icon: 'none',
-  //                   duration: 2000,
-  //                 })
-  //               }, 2000)
-  //             }
+        } else if (res.data.type === 0){
+          //发送国内短信
+          console.log('发送国内短信')
+          //验证手机号
+          //发送验证码
+          util.request(api.SedDomesticSode, {
+            phone: that.data.inputMobile
+          }, 'POST').then(function (res) {
+            console.log(res)
+            if (res.errno === 0) {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                duration: 2000
+              })
+              if (res.data.message == '短信发送成功 ！') {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }, 2000)
+              } else {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '异常状态 ！ 短信发送失败 ！',
+                    icon: 'none',
+                    duration: 2000,
+                  })
+                }, 2000)
+              }
 
-  //             console.log(res.data.num)
-  //             that.setData({
-  //               truesode: res.data.num
-  //             })
-  //           } else {
-  //             wx.showToast({
-  //               title: '短信发送失败 ！',
-  //               icon: 'none',
-  //               duration: 2000,
-  //               mask: true,
-  //             })
-  //           }
-  //         })
-  //         //按钮倒计时
-  //         var second = that.data.second;
-  //         that.setData({
-  //           sendcodetext: second + '秒',
-  //           codedisabled: true,
-  //           codeloading: true,
-  //           checkdisabled: false,
-  //         })
-  //         const timer = setInterval(() => {
-  //           second--;
-  //           if (second) {
-  //             that.setData({
-  //               sendcodetext: second + '秒',
-  //               codedisabled: true,
-  //               codeloading: true,
-  //             })
-  //           } else {
-  //             clearInterval(timer);
-  //             that.setData({
-  //               sendcodetext: ' 获取验证码 ',
-  //               codedisabled: false,
-  //               codeloading: false,
-  //             })
-  //           }
-  //         }, 1000);
-  //       }
-  //     })
-  //   }
-  // },
-  // checked: function () {
-  //   var that = this
-  //   console.log(that.data.truesode)
-  //   if (that.data.inputcode == '') {
-  //     wx.showToast({
-  //       title: '您没有输入验证码 ！',
-  //       icon: 'none',
-  //       duration: 2000
-  //     })
-  //   } else {
-  //     //验证手机号
-  //     // util.request(api.CheckSode,{
-  //     //   phone: that.data.inputMobile,
-  //     //   code: that.data.inputcode,
-  //     // }, 'POST').then(function (res){
-  //     //   console.log(res)
-  //     try {
-  //       var value = wx.getStorageSync('userInfo')
-  //       if (value) {
-  //         // Do something with return value
-  //         if (that.data.truesode !== that.data.inputcode) {
-  //           util.showErrorToast('验证码错误 ！');
-  //         } else {
-  //           console.log(that.data.inputMobile)
-  //           util.request(api.BingPhoneBing, {
-  //             bingphone: that.data.inputMobile,
-  //             selectedcountry: that.data.selectedcountry,
-  //             userid: value.id
-  //           }, 'POST').then(function (res) {
-  //             console.log(res)
-  //             if (res.errno == 0) {
-  //               setTimeout(() => {
-  //                 util.request(api.ApplyDistribution, {
-  //                   phone: that.data.inputMobile,
-  //                   selectedcountry: that.data.selectedcountry,
-  //                   userid: value.id
-  //                 }, 'POST').then(ress => {
-  //                   console.log(ress)
-  //                   that.finddistribinfo()
-  //                   that.hide_model()
-  //                 })
-  //                 util.request(api.BingPhoneFind).then(function (resd) {
-  //                   console.log(resd)
-  //                   that.setData({
-  //                     userinfo: resd.data.Result
-  //                   })
-  //                 });
-  //               }, 1000)
-  //               wx.showToast({
-  //                 title: '分销员申请已提交 ！',
-  //                 icon: 'none',
-  //                 duration: 2000
-  //               })
+              console.log(res.data.num)
+              that.setData({
+                truesode: res.data.num
+              })
+            } else {
+              wx.showToast({
+                title: '短信发送失败 ！',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+              })
+            }
+          })
+          //按钮倒计时
+          var second = that.data.second;
+          that.setData({
+            sendcodetext: second + '秒',
+            codedisabled: true,
+            codeloading: true,
+            checkdisabled: false,
+          })
+          const timer = setInterval(() => {
+            second--;
+            if (second) {
+              that.setData({
+                sendcodetext: second + '秒',
+                codedisabled: true,
+                codeloading: true,
+              })
+            } else {
+              clearInterval(timer);
+              that.setData({
+                sendcodetext: ' 获取验证码 ',
+                codedisabled: false,
+                codeloading: false,
+              })
+            }
+          }, 1000);
+        }
+      })
+    }
+  },
+  checked: function () {
+    var that = this
+    console.log(that.data.truesode)
+    if (that.data.inputcode == '') {
+      wx.showToast({
+        title: '您没有输入验证码 ！',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      //验证手机号
+      // util.request(api.CheckSode,{
+      //   phone: that.data.inputMobile,
+      //   code: that.data.inputcode,
+      // }, 'POST').then(function (res){
+      //   console.log(res)
+      try {
+        var value = wx.getStorageSync('userInfo')
+        if (value) {
+          // Do something with return value
+          if (that.data.truesode !== that.data.inputcode) {
+            util.showErrorToast('验证码错误 ！');
+          } else {
+            console.log(that.data.inputMobile)
+            util.request(api.BingPhoneBing, {
+              bingphone: that.data.inputMobile,
+              selectedcountry: that.data.selectedcountry,
+              userid: value.id
+            }, 'POST').then(function (res) {
+              console.log(res)
+              if (res.errno == 0) {
+                setTimeout(() => {
+                  util.request(api.ApplyDistribution, {
+                    phone: that.data.inputMobile,
+                    selectedcountry: that.data.selectedcountry,
+                    userid: value.id
+                  }, 'POST').then(ress => {
+                    console.log(ress)
+                    that.finddistribinfo()
+                    that.hide_model()
+                  })
+                  util.request(api.BingPhoneFind).then(function (resd) {
+                    console.log(resd)
+                    that.setData({
+                      userinfo: resd.data.Result
+                    })
+                  });
+                }, 1000)
+                wx.showToast({
+                  title: '分销员申请已提交 ！',
+                  icon: 'none',
+                  duration: 2000
+                })
 
-  //             }
-  //           })
-  //         }
-  //       }
-  //     } catch (e) {
-  //       // Do something when catch error
-  //     }
+              }
+            })
+          }
+        }
+      } catch (e) {
+        // Do something when catch error
+      }
       
-  //     // })
-  //   }
-  // },
+      // })
+    }
+  },
   /**
    * 生命周期函数--监听页面显示
    */

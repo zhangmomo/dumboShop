@@ -1,6 +1,8 @@
 const util = require('../../utils/util.js');
 const api = require('../../config/api.js');
 const user = require('../../services/user.js');
+const txvContext = requirePlugin("tencentvideo");
+const config = require('../../modules/config');
 const app = getApp();
 //获取应用实例
 Page({
@@ -14,6 +16,7 @@ Page({
     // topics: [],
     // brands: [],
     floorGoods: [],
+    contactList:[],
     banner: [],
     channel: [],
     auth: false,
@@ -23,14 +26,32 @@ Page({
     isdistribution: false,
     Inviter_locallaster: [],
     scrollTop: 0, //滚动监听
+    vid: 'l0025mppim4',
+    vidlist: ['l0025mppim4', 'e0354z3cqjp','m0026z2kibn']
   },
   onShareAppMessage: function() {
     let that = this
+    if (app.CorporateData.name == 'bbg') {
       return {
         title: '贝堡商城',
         desc: '贝堡商城微信小程序',
         path: '/pages/index/index',
         imageUrl: '../../image/CorporateData/bbg_share_logo.png',
+      }
+    } else if (app.CorporateData.name == 'yt') {
+      return {
+        title: '易天商城吊桥路店',
+        desc: '易天商城吊桥路店微信小程序',
+        path: '/pages/index/index',
+        imageUrl: '../../image/CorporateData/yt_share_logo.png',
+      }
+    } else if (app.CorporateData.name == 'dw') {
+      return {
+        title: '德威商城·乐家家国际超市',
+        desc: '德威商城·乐家家国际超市微信小程序',
+        path: '/pages/index/index',
+        imageUrl: '../../image/CorporateData/dw_share_logo.png',
+      }
     }
 
   },
@@ -52,21 +73,22 @@ Page({
       wx.hideLoading()
       if (res.errno === 0) {
         that.setData({
-          luckdraw: res.data.luckdraw,
-          collage: res.data.collage,
-          newGoods: res.data.newGoodsList,
-          hotGoods: res.data.hotGoodsList,
+          // luckdraw: res.data.luckdraw,
+          // collage: res.data.collage,
+           newGoods: res.data.newGoodsList,
+          contactList: res.data.contactList,
+          // hotGoods: res.data.hotGoodsList,
           // topics: res.data.topicList,
           // brand: res.data.brandList,
           floorGoods: res.data.categoryList,
           banner: res.data.banner,
           channel: res.data.channel
         });
-        util.request(api.GoodsCount).then(function(res) {
-          that.setData({
-            goodsCount: res.data.goodsCount
-          });
-        });
+        // util.request(api.GoodsCount).then(function(res) {
+        //   that.setData({
+        //     goodsCount: res.data.goodsCount
+        //   });
+        // });
         wx.stopPullDownRefresh()
         that.setTime()
       }
@@ -79,6 +101,8 @@ Page({
       let item = that.data.luckdraw[i]
       item.open_local_time = util.timestampToTime(item.luck_open_time)
       item.limit_local_time = util.timestampToTime(item.luck_limit_time)
+      // item.is_out_time_page = Number(item.luck_limit_time) > new Date().getTime() ? '0' : '1'
+      // item.is_open_time_page = Number(item.luck_open_time) > new Date().getTime() ? '0' : '1'
     }
     that.setData({
       luckdraw: that.data.luckdraw
@@ -129,7 +153,7 @@ Page({
   },
   tocategorypage(e) {
     wx.navigateTo({
-      url: '/pages/category/category?id=' + e.currentTarget.dataset.id + '&title=商品分类',
+      url: '/pages/category/category?id=' + e.currentTarget.dataset.id,
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
@@ -175,22 +199,6 @@ Page({
     // this.goLogin()
 
 
-  },
-  JumpUrl(e){
-    let id = e.currentTarget.dataset.url
-    util.request(api.getchildrenCategoryIdByFather,{
-      id:id
-    },'POST').then(res => {
-      console.log(res)
-      id = res.data.return_id
-      let title = res.data.fathercategoryTitle
-      wx.navigateTo({
-        url: '/pages/category/category?id=' + id + '&title=' + title,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
-    })
   },
   // onshowaction() {
   // this.checkauth('1')

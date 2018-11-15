@@ -22,7 +22,6 @@ Page({
     btn_sure_disabled: true,
     show_input_box: false,
     disvalue: '',
-    // Will_discount: 0.0,
   },
 
   /**
@@ -46,17 +45,6 @@ Page({
     }
 
   },
-  // onPullDownRefresh() {
-  //   let that = this
-  //   console.log("123465")
-  //   // if(op == '0'){
-  //   // this.checkauth('1')
-  //   // wx.showLoading({
-  //   //   title: '更新中...',
-  //   //   mask: true,
-  //   // })
-  //   // that.getuserLevelInfo();
-  // },
   getuserLevelInfo() {
     let that = this
     util.request(api.getUserLevelInfo,{
@@ -88,8 +76,7 @@ Page({
     }
     that.setData({
       user_rechange_list: that.data.user_rechange_list,
-      userLevelData: that.data.userLevelData,
-      // Will_discount: that.data.level_list.length > 0 && (that.data.userLevelData.user_level == that.data.level_list.length) ? '' : (that.data.level_list[that.data.userLevelData.user_level].discount_scale * 1).toFixed(1) 
+      userLevelData: that.data.userLevelData
     })
   },
   startRecharge(){

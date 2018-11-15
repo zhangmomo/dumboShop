@@ -81,12 +81,29 @@ Page({
     let that = this
     console.log(that.data.goods.id)
     console.log(that.data.Inviter_locallaster)
+    if (that.data.CorporateName == 'bbg'){
       return {
         title: '贝堡商城',
         desc: that.data.goods.name,
         path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
         imageUrl: '../../image/CorporateData/bbg_share_logo.png',
+      }
+    }else if (that.data.CorporateName == 'dw') {
+      return {
+        title: '德威商城·乐家家国际超市',
+        desc: that.data.goods.name,
+        path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+        imageUrl: '../../image/CorporateData/dw_share_logo.png',
+      }
+    } else if (that.data.CorporateName == 'yt') {
+      return {
+        title: '易天商城吊桥路店',
+        desc: that.data.goods.name,
+        path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+        imageUrl: '../../image/CorporateData/yt_share_logo.png',
+      }
     }
+    
   },
   bindGetUserInfo: function (e) {
     let that = this
@@ -498,7 +515,7 @@ Page({
         animationData: animation.export()
       })
     }.bind(this), 200)
-
+    
   },
   hideModal: function () {
     // 隐藏遮罩层
@@ -567,7 +584,7 @@ Page({
     // console.log(that.data)
     // var goodser = that.data.goods
     var checkedGoods = that.data.goods
-    //取消购物车商品的选中状态
+    //取消购物车商品的选中状态 
     util.request(api.CartCheckeder)
       .then(function (res) { });
     //添加到购物车
@@ -615,9 +632,7 @@ Page({
               mask: true
             });
           }
-          util.request(api.BingPhoneFind,{
-            userId: that.data.userinfo.id
-          },'POST').then(function (res) {
+          util.request(api.BingPhoneFind).then(function (res) {
             console.log(res)
             if (res.data.Result.mobile == "") {
               wx.navigateTo({
@@ -637,27 +652,27 @@ Page({
   },
   checkauth() {
     let that = this
-    // if (that.data.power == 0) {
-    //   wx.hideLoading()
-    //   wx.navigateTo({
-    //     url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/goods/goods' + "&data=" + that.data.goods.id,
-    //     success: function (res) { },
-    //     fail: function (res) { },
-    //     complete: function (res) { },
-    //   })
-    // } else if (that.data.power == 1) {
+    if (that.data.power == 0) {
+      wx.hideLoading()
+      wx.navigateTo({
+        url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/goods/goods' + "&data=" + that.data.goods.id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else if (that.data.power == 1) {
       wx.showLoading({
         title: '获取信息...',
         mask: true,
       })
-      // user.loginByWeixin().then(res => {
-        // console.log(res)
+      user.loginByWeixin().then(res => {
+        console.log(res)
         wx.hideLoading()
         that.showModal()
-      // }).catch(res => {
-        // console.log(res)
-      // })
-    // }
+      }).catch(res => {
+        console.log(res)
+      })
+    }
   },
   checkpower(e) {
     var that = this
@@ -707,9 +722,7 @@ Page({
       })
       return false;
     }
-    util.request(api.BingPhoneFind, {
-      userId: that.data.userinfo.id
-    }, 'POST').then(function (res) {
+    util.request(api.BingPhoneFind).then(function (res) {
       console.log(res)
       if (res.data.Result.mobile == "") {
         wx.navigateTo({
@@ -766,18 +779,18 @@ Page({
   },
   closeAttrOrCollect: function () {
     let that = this;
-    // wx.showLoading({
-    //   title: '授权检测...',
-    //   mask: true
-    // })
-    // if (!that.data.auth) {
-    //   wx.navigateTo({
-    //     url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
-    //     success: function (res) { },
-    //     fail: function (res) { },
-    //     complete: function (res) { },
-    //   })
-    // } else {
+    wx.showLoading({
+      title: '授权检测...',
+      mask: true
+    })
+    if (!that.data.auth) {
+      wx.navigateTo({
+        url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else {
       util.request(api.CollectAddOrDelete, { typeId: 0, valueId: that.data.id }, "POST").then(function (res) {
         let _res = res;
         wx.hideLoading()
@@ -796,7 +809,7 @@ Page({
           } else {
             wx.showToast({
               title: '取消收藏！',
-              icon: 'success',
+              icon: 'loading',
               image: '',
               duration: 500,
               mask: true,
@@ -814,7 +827,7 @@ Page({
           });
         }
       })
-    // }
+    }
   },
   openCartPage: function () {
     wx.switchTab({

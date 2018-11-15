@@ -40,4 +40,4 @@
 </view>
 <button class='catch_sure' disabled='{{applybtndisable}}' bindtap='catch_apply'>提交提现申请</button>
 <view class='tips'>注：暂不支持提现到微信零钱，后续会开通。</view>
-<view class="tips">再注：提现到银行卡需要大概36小时内到账，请悉知。</view>
+<view class="tips">再注：提现到银行卡需要大概36小时内才会到账，请悉知。</view>

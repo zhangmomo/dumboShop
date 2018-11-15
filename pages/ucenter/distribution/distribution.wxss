@@ -260,17 +260,6 @@
   font-weight: bold;
   margin-top: 2vh;
 }
-.top_area_simple {
-  position: fixed;
-  top: 15rpx;
-  right: 25rpx;
-  width: 35rpx;
-  height: 35rpx;
-  /* border: 1px solid black; */
-  /* padding: 5rpx; */
-  /* font-size: 25rpx; */
-  /* border-radius: 50%; */
-}
 .top_area_addtime {
   font-size: 24rpx;
   color:#757575;
@@ -470,35 +459,3 @@
   font-weight: bold;
   letter-spacing: 1rpx;
 }
-
-
-.recharge_box_mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5)
-}
-.recharge_box {
-  background: #fff;
-  position: fixed;
-  padding: 15rpx;
-  border-radius: 10rpx;
-  top: 10vh;
-  height: 80vh;
-  width: 90vw;
-  left: 3.625vw;
-  z-index: 11;
-}
-/* .recharge_box_detail {
-  background: #fff;
-  position: fixed;
-  padding: 15rpx;
-  border-radius: 10rpx;
-  top: 10vh;
-  height: 80vh;
-  width: 90vw;
-  left: 5vw;
-} */

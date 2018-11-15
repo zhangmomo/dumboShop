@@ -350,9 +350,7 @@ Page({
     if (checkedGoods.length <= 0) {
       return false;
     }
-    util.request(api.BingPhoneFind, {
-      userId: app.globalData.userInfo.id
-    }, 'POST').then(function (res) {
+    util.request(api.BingPhoneFind).then(function (res) {
       console.log(res)
       if (res.data.Result.mobile == "") {
         wx.navigateTo({

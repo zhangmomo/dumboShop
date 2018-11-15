@@ -1,14 +1,9 @@
 <!--pages/ucenter/NoviceGuide/NoviceGuide.wxml-->
 <!-- <text>pages/ucenter/NoviceGuide/NoviceGuide.wxml</text> -->
-
-<view wx:if="{{is_Skeleton}}">
-  <view class='skeleton_title'></view>
-  <view class='skeleton_content' wx:for="12346579889789" wx:key="{{item.id}}"></view>
-</view>
-<view class='no_guide' wx:if="{{have_guide.length == 0 && !is_Skeleton}}">
+<view class='no_guide' wx:if="{{have_guide.length == 0}}">
   还没有新手指南 !
 </view>
-<view class='' wx:if="{{have_guide.length > 0 && !is_Skeleton}}">
+<view class='' wx:if="{{have_guide.length > 0}}">
   <scroll-view scroll-y class="detail">
     <import src="../../../lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:guide.nodes}}" />

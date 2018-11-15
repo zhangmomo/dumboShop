@@ -199,7 +199,7 @@ Page({
       console.log(that.data.refundreson_index) //退款原因 下标
       console.log(that.data.refund_orderprice) //退款订单总价
       let refund_price = that.data.refund_orderprice
-      console.log(refund_price)  //退款金额
+      console.log(refund_price)  //退款金额 
 
       wx.showModal({
         title: '警告！',
@@ -211,7 +211,7 @@ Page({
               refund_type: that.data.refund_type, //退款类型
               refund_reson: that.data.refund_resond, //退款原因
               refund_index: that.data.refund_index, //退款方式 下标
-              refund_local_index: that.data.refund_nologarray[that.data.refund_index], //退款方式 文字
+              refund_local_index: that.data.refund_nologarray[that.data.refund_index], //退款方式 文字        
               refundreson_index: that.data.refundreson_index, //退款原因 下标
               refundreson_local_index: that.data.refund_resonarray[that.data.refundreson_index], //退款原因 文字
               refund_order_price: that.data.refund_orderprice,
@@ -253,7 +253,7 @@ Page({
         complete: function (res) { },
       })
 
-    } else if (that.data.refund_type == 1) {   //发货后退款
+    } else if (that.data.refund_type == 1) {   //发货后退款 
       console.log(that.data.refund_uploadimg) //退款凭证图片
       console.log(that.data.refund_resond)    //退款原因
       console.log(that.data.refund_logindex) //退款方式 下标
@@ -314,7 +314,7 @@ Page({
               refund_type: that.data.refund_type, //退款类型
               refund_reson: that.data.refund_resond, //退款原因
               refund_index: that.data.refund_index, //退款方式 下标
-              refund_local_index: that.data.refund_nologarray[that.data.refund_index], //退款方式 文字
+              refund_local_index: that.data.refund_nologarray[that.data.refund_index], //退款方式 文字        
               refundreson_index: that.data.refundreson_index, //退款原因 下标
               refundreson_local_index: that.data.refund_resonarray[that.data.refundreson_index], //退款原因 文字
               refund_order_price: that.data.refund_orderprice,
@@ -624,12 +624,8 @@ Page({
           } catch (e) {
 
           }
-        } else if(ress.errno === 666 ){
-          console.log('父级的一次分销 ')
-          that.setDistriPrice(sn,666)
-        } else if (ress.errno === 777) {
-          console.log('父级的二次分销 ')
-          that.setDistriPrice(sn,777)
+        } else if(ress.errno === 666 || ress.errno === 777){
+          that.setDistriPrice(sn)
         }
       })
     })
@@ -637,14 +633,13 @@ Page({
   },
   setDistriInviter(sn,pasteruser) {
     let that = this
-    console.log("进入绑定分销关系函数")
     util.request(api.SetInviterMaster, {
       nowuser: that.data.userinfo,
       pasteruser: pasteruser
     }, 'POST').then(res => {
       console.log(res)
       if (res.errno === 11) {
-        that.setDistriPrice(sn,0)
+        that.setDistriPrice(sn)
         wx.hideLoading()
         try {
           wx.removeStorageSync('invitation')
@@ -662,11 +657,10 @@ Page({
       }
     })
   },
-  setDistriPrice(sn,typec){
+  setDistriPrice(sn){
     let that = this
     util.request(api.AddDistributionPrice,{
       sn:sn,
-      typec: typec,
       nowuser: that.data.userinfo,
     },'POST').then(res => {
       console.log(res)
@@ -913,7 +907,7 @@ Page({
           console.log(res)
           let obj = {}
           obj = res
-          obj.img = api.uploadaddress + res.imageURL
+          obj.img = "http://resource.bbgshop.com" + res.imageURL
           that.data.refund_uploadimg.push(obj)
           that.setData({
             refund_uploadimg: that.data.refund_uploadimg

@@ -254,32 +254,26 @@ page{
 }
 /* 以下为图标bar区域 */
 .icon_bar {
-  /* border: 1px solid black;  */
-  height: 400rpx;
+  /* border: 1px solid black; */
+  /* height: 280rpx; */
   background: #fff;
-  padding: 0 25rpx; 
-  /* display: flex;   */
-  justify-content: center; 
+ /* padding: 0 25rpx;  */
+  display: flex;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;  
-  padding-bottom: 10rpx; 
+  flex-wrap: wrap;
+  padding-bottom: 10rpx;
 } 
 .icon_bar_item {
   /* border: 1px solid black; */
   float: right; 
   height: 170rpx;
   margin: 10rpx 1rpx 10rpx 6rpx;
-}
+}	
 .icon_bar_img {
-  /* border: 1px solid black; */
-  width: 130rpx;
-  height: 130rpx;
-}
-
-.icon_bar_title{
   /* border: 1px solid black;  */
-  width: 130rpx;
-  height: 50rpx;
+  width: 70rpx;
+  height: 70rpx;
 }
 /* 以下为人气推荐区域 */
 .hot_goods_area {
@@ -423,3 +417,29 @@ page{
 .currency_title_view_title_area {
   margin-top: 10rpx;
 }
+
+.icon_bar_title{
+  /* border: 1px solid black;  */
+  width: 130rpx;
+  height: 50rpx;
+}
+
+.intor_detail{
+  font-weight: bold;
+  text-align: justify;
+  font-size:31rpx;
+  padding: 30rpx 50rpx 30rpx 80rpx;
+  align-items: center;
+  text-indent : 20rpx; 
+  letter-spacing:4rpx;
+  line-height:60rpx;
+}
+
+.txv-video-slot{
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+    margin: 10px;
+  }

@@ -37,7 +37,9 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    this.reloadRouter()
+    // let route = getCurrentPages()
+    // var prevPage = route[route.length - 2]
+    // console.log(prevPage)
     // 页面初始化 options为页面跳转所带来的参数
     // console.log(options.goodsid)
     // this.setData({
@@ -51,6 +53,7 @@ Page({
           addressId: addressId
         });
       }
+
       var userInfo = wx.getStorageSync('userInfo'); 
       // console.log(userinfo)
       if (userInfo) {
@@ -58,6 +61,13 @@ Page({
           userinfo: userInfo
         });
       }
+      // var couponId = wx.getStorageSync('couponId');
+      // if (couponId) {
+      //   this.setData({
+      //     'couponId': couponId
+      //   });
+      // }
+
       var couponId = wx.getStorageSync('couponId');
       if (couponId) {
         this.setData({
@@ -68,17 +78,7 @@ Page({
       // Do something when catch error
     }
     this.FindCup()
-  },
-  reloadRouter() {
-    let that = this
-    setTimeout(() => {
-      if (that.data.checkedGoodsList.length == 0){
-        wx.navigateBack({
-          delta: 1,
-        })
-      }
-
-    },2000)
+    
   },
   freetext(event){
     // console.log(event)

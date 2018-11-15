@@ -11,8 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    have_guide: [],
-    is_Skeleton: true,
+    have_guide: []
   },
 
   /**
@@ -26,8 +25,7 @@ Page({
     util.request(api.GetNoviceGuide).then(res => {
       console.log(res)
       that.setData({
-        have_guide: res.data,
-        is_Skeleton: false
+        have_guide: res.data
       })
       if(res.data.length > 0){
         WxParse.wxParse('guide', 'html', res.data[0].rules_text, that);

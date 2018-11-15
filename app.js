@@ -33,7 +33,7 @@ App({
     //   }
     // });
   },
-
+  
   globalData: {
     userInfo: {
       nickname: 'Hi,游客',
@@ -43,7 +43,7 @@ App({
     token: '',
   },
   CorporateData: {
-    name: 'bbg',
-    title: '贝堡商城'
+    name: 'dw',
+    title: '德威商城·乐家家国际超市'
   }
 })

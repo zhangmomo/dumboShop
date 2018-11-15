@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/out/out",
     "pages/catalog/catalog",
     "pages/newGoods/newGoods",
     "pages/hotGoods/hotGoods",
@@ -29,6 +30,8 @@
     "pages/shopping/shcoupon/shcoupon",
     "pages/ucenter/bingphone/bingphone",
     "pages/ucenter/customer/customer",
+    "pages/bargain/bargain",
+    "pages/bargaingoods/bargaingoods",
     "pages/couponCenter/couponcenter",
     "pages/ucenter/ordercomment/ordercomment",
     "pages/collagecheckout/collagecheckout",
@@ -53,7 +56,7 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "enablePullDownRefresh": false,
-    "navigationBarTitleText": "德威商城·乐家家国际超市",
+    "navigationBarTitleText": "小飞象营销",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -64,33 +67,35 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "./image/tab_home.png",
-        "selectedIconPath": "./image/tab_home_select.png",
+        "iconPath": "image/tab_home.png",
+        "selectedIconPath": "image/tab_home_select.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/catalog/catalog",
-        "iconPath": "./image/tab_catelog.png",
-        "selectedIconPath": "./image/tab_catelog_select.png",
-        "text": "分类"
-      },
-      {
-        "pagePath": "pages/cart/cart",
-        "iconPath": "./image/tab_cart.png",
-        "selectedIconPath": "./image/tab_cart_select.png",
-        "text": "购物车"
+        "iconPath": "image/tab_cart.png",
+        "selectedIconPath": "image/tab_cart_select.png",
+        "text": "校区活动"
       },
       {
         "pagePath": "pages/ucenter/index/index",
-        "iconPath": "./image/tab_my.png",
-        "selectedIconPath": "./image/tab_my_select.png",
+        "iconPath": "image/tab_my.png",
+        "selectedIconPath": "image/tab_my_select.png",
         "text": "我的"
       }
     ]
   },
   "networkTimeout": {
     "request": 10000,
-    "downloadFile": 10000
+    "downloadFile": 10000,
+    "connectSocket": 30000,
+    "uploadFile": 30000
   },
-  "debug": true
+  "debug": true,
+  "plugins": {
+    "tencentvideo": {
+      "version": "1.2.0",
+      "provider": "wxa75efa648b60994b"
+    }
+  }
 }

@@ -80,7 +80,7 @@ function request(url, data = {}, method = "GET") {
           mask: true,
           success: function(res) {},
           fail: function(res) {},
-          complete: function(res) {},
+          complete: function(res) {}
         })
       }
     })

@@ -55,7 +55,9 @@ Page({
   },
   getcountrycode() {
     let that = this
-    util.request(api.GetCountryCode, {}, 'POST').then(res => {
+    util.request(api.GetCountryCode, {
+
+    }, 'POST').then(res => {
       console.log(res)
       if (res.errno == 0) {
         for (let i = 0; i < res.data.length; i++) {
@@ -83,35 +85,24 @@ Page({
    */
   findphone: function () {
     let that = this;
-    try {
-      var value = wx.getStorageSync('userInfo')
-      if (value) {
-        // Do something with return value
-        util.request(api.BingPhoneFind, {
-          userId: value.id
-    }, 'POST').then(function (res) {
-            console.log(res)
-            wx.hideLoading()
-            if (res.data.Result.mobile == "") {
-              that.setData({
-                isbing: false,
-                userinfo: res.data.Result,
-                bingisnottext: "您还没有绑定手机号！",
-                show_mask: true
-              })
-              that.getcountrycode()
-            } else {
-              that.setData({
-                isbing: true,
-                userinfo: res.data.Result
-              })
-            }
-          });
+    util.request(api.BingPhoneFind).then(function (res) {
+      console.log(res)
+      wx.hideLoading()
+      if (res.data.Result.mobile == "") {
+        that.setData({
+          isbing:false,
+          userinfo: res.data.Result,
+          bingisnottext: "您还没有绑定手机号！",
+          show_mask: true
+        })
+        that.getcountrycode()
+      }else {
+        that.setData({
+          isbing: true,
+          userinfo: res.data.Result
+        })
       }
-    } catch (e) {
-      // Do something when catch error
-    }
-    
+    });
   },
   getcode() {
     var that = this
@@ -313,9 +304,7 @@ Page({
                 icon: 'success',
                 duration: 2000
               })
-              util.request(api.BingPhoneFind, {
-                userId: that.data.userinfo.id
-              }, 'POST').then(function (res) {
+              util.request(api.BingPhoneFind).then(function (res) {
                 console.log(res)
                 that.setData({
                   show_mask: false,

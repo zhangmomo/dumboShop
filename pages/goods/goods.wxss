@@ -118,7 +118,7 @@ page {
 .scroll_goods_tabler .text {
   float: left;
   padding-left: 20rpx;
-  font-size: 25rpx;
+  font-size: 27rpx;
 }
 .scroll_goods_tabler .arrow {
   float: right;
@@ -139,7 +139,7 @@ page {
 .scroll_goods_tabler_text {
   float: left;
   padding-left: 2rpx;
-  font-size: 25rpx;
+  font-size: 24rpx;
 }
 .scroll_goods_tabler_arrow {
   float: right;
@@ -497,9 +497,6 @@ page {
 }
 button[class="area customer"]::after {
   border: 0;
-}
-button[class="scroll_goods_tabler"]::after {
-  border: 0;
 } 
 .customer {
   left: 0rpx;
@@ -732,9 +729,6 @@ button[class="scroll_goods_tabler"]::after {
   background-image: linear-gradient(to right, #ff7701 0%, #fe4800 100%);
   opacity: 0.8;
   letter-spacing: 1rpx;
-}
-.shall_buttom.top {
-   bottom: 180rpx;
 }
 .goodsimgs {
   width: 750rpx;

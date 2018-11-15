@@ -4,9 +4,8 @@
   <image class='top_area_avatar' src='{{userInfo.avatar}}'></image>
   <view class='top_area_nickname'>{{userInfo.nickname}}</view>
   <view class='top_area_level'>
-    <span class="background">
-      <span class="big">{{userLevelData.user_level == 0 ? '普通用户' : level_list[userLevelData.user_level - 1].name}}</span>
-    </span>
+    <span class="background">VIP
+      <span class="big">{{userLevelData.user_level}}</span> 级会员</span>
   </view>
 </view>
 <view class='middle_area'>
@@ -27,31 +26,11 @@
   <view class='middle_area_item'>
     <view class='value'>购买折扣</view>
     <view class='value_a'>
-      <span class="a big">{{userLevelData.user_level == 0 ? '10' : level_list[userLevelData.user_level - 1].user_discount}}</span> 折
+      <span class="a">{{userLevelData.user_discount}}</span>
     </view>
   </view>
 </view>
-<scroll-view scroll-x class='middle_buttom_area'>
-  <view class='middle_buttom_area_item' wx:if="{{level_list.length > 0}}" wx:for="{{level_list}}">
-    <view class='normal title'>{{item.name}}</view>
-    <view class='normal item'>累计消费达 {{item.consumption_monery}}</view>
-    <view class='normal item'>累计充值达 {{item.recharge_monery}}</view>
-    <view class='normal item'>享受折扣：<span class="big">{{item.discount_scale}}</span> 折</view>
-  </view>
-  <view class='middle_buttom_area_no_item top' wx:if="{{level_list.length == 0}}">管理员未开启会员等级，但您仍可以充值 ！</view>
-  <view class='middle_buttom_area_no_item bottom' wx:if="{{level_list.length == 0}}">当开启会员，将会根据您充值的金额或累计消费金额划分您的等级 ！</view>
-</scroll-view>
-<view wx:if="{{level_list.length > 0 && (userLevelData.user_level == level_list.length)}}" class='middle_buttom_area_uplest'> 您已达到最高等级 </view>
-<view wx:else>
-  <view class='middle_buttom_area_item_distance'>距离下一等级还差累计充值 ￥
-    <span class="biger">{{userLevelData.rest_price}}</span>
-  </view>
-  <view class='middle_buttom_area_item_discount'>您将会享受全场购物<span class="biger"> {{level_list[userLevelData.user_level].discount_scale}}</span> 折 <span class="big">（一年）</span> </view>
-</view>
-
-<button class='middle_buttom_area_item_btn' bindtap='startRecharge'>立即充值</button>
-
-<!-- <view class='middle_buttom_area'>
+<view class='middle_buttom_area'>
   <view class='middle_buttom_area_lasty' wx:if="{{userLevelData.user_level < level_list.length}}">
     <span class="middle_buttom_area_lasty_top">距离
       <span class="background">VIP
@@ -69,9 +48,9 @@
   </view>
   <button class='middle_buttom_area_btn' bindtap='startRecharge'>立即充值</button>
 </view>
--->
 <view class='recharge_box_mask' wx:if="{{show_input_box}}" bindtap='close_mask'></view>
 <view class='recharge_box' wx:if="{{show_input_box}}">
+  <!-- <view class='recharge_box_title'>填写充值金额</view> -->
   <view class='recharge_box_price_area'>
     <span class="recharge_box_price_area_a">￥</span>
     <input type='digit' class='recharge_box_price_area_input' value='{{disvalue}}' bindinput='input_money' />
@@ -80,7 +59,7 @@
     <button class='recharge_box_price_btn_canel' bindtap='close_mask'>取消</button>
     <button class='recharge_box_price_btn_sure' disabled='{{btn_sure_disabled}}' bindtap='rechargeSure'>确认</button>
   </view>
-</view> 
+</view>
 <scroll-view scroll-y class='have_rechange_area'>
   <view class='have_rechange_area_item' wx:if="{{user_rechange_list.length > 0}}" wx:for="{{user_rechange_list}}" wx:key="{{item.id}}">
     您于 {{item.add_localtime}} 发起充值 ￥{{item.rechange_price}} 元
