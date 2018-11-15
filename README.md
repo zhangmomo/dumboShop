@@ -22,7 +22,7 @@ GitHub: ，
 
 
 
-![enter image description here](dumboShop/github/github_2.png)
+![enter image description here](https://wx.sharkmeida.cn/imgs/github/github_2.png)
 
 ![enter image description here](https://wx.sharkmeida.cn/imgs/github/github_5.png)
 
