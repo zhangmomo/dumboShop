@@ -48,11 +48,6 @@ GitHub: ，
 
 > 哈哈哈 如果帮到了你 那真的是太好了
 
-![enter image description here](![enter image description here](https://wx.sharkmeida.cn/imgs/github/github_16.png)
-
-
-> 谢谢你们啦
-
 ### 最后
 谢谢大家支持
 "# dumboShop" 
