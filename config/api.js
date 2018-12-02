@@ -1,6 +1,4 @@
 const ApiRootUrl = 'https://wx.sharkmeida.cn/sys/log/queryAll';
-// const ApiRootUrl = 'http://118.25.7.94:8360';
-
 module.exports = {
   IndexUrl: ApiRootUrl, //首页数据接口
   CatalogList: ApiRootUrl + 'catalog/index',  //分类目录全部分类数据接口
